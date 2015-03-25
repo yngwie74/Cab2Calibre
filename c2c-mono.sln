@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cab2Calibre", "Cab2Calibre\Cab2Calibre-mono.csproj", "{10455976-70F5-4CAF-911C-1BFAF06D5A67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cab2CalibreTests", "Cab2CalibreTests\Cab2CalibreTests-mono.csproj", "{D111515B-2529-43C5-A36C-E5366F5BF726}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10455976-70F5-4CAF-911C-1BFAF06D5A67}.Debug|x86.ActiveCfg = Debug|x86
+		{10455976-70F5-4CAF-911C-1BFAF06D5A67}.Debug|x86.Build.0 = Debug|x86
+		{10455976-70F5-4CAF-911C-1BFAF06D5A67}.Release|x86.ActiveCfg = Release|x86
+		{10455976-70F5-4CAF-911C-1BFAF06D5A67}.Release|x86.Build.0 = Release|x86
+		{D111515B-2529-43C5-A36C-E5366F5BF726}.Debug|x86.ActiveCfg = Debug|x86
+		{D111515B-2529-43C5-A36C-E5366F5BF726}.Debug|x86.Build.0 = Debug|x86
+		{D111515B-2529-43C5-A36C-E5366F5BF726}.Release|x86.ActiveCfg = Release|x86
+		{D111515B-2529-43C5-A36C-E5366F5BF726}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Cab2Calibre\Cab2Calibre-mono.csproj
+	EndGlobalSection
+EndGlobal
