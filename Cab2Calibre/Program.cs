@@ -33,8 +33,7 @@
             _fs = fs;
         }
 
-        public Program(string targetDir)
-            : this(targetDir, new FileSystem())
+        public Program(string targetDir) : this(targetDir, new FileSystem())
         {
         }
 
@@ -70,8 +69,7 @@
         public static int Main()
         {
             var source = new Cabinet(SOURCE_DIR);
-            var program = new Program(Path.Combine(@"/media/E01C57B51C578586/ebooks", TargetDir));
-            //var program = new Program(Path.Combine(@"C:\Users\User\_export", TARGET_DIR));
+            var program = new Program(TargetDir);
 
             program.Export(source, AllTags);
 
