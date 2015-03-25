@@ -36,10 +36,21 @@
         [Test]
         public void Title()
         {
-            using (File.CreateText(Path.Combine(DirName, "articles.idx")))
+            var path = Path.Combine(DirName, "articles.idx");
+            try
             {
-                var c = new Cabinet(DirName);
-                Assert.That(c.Title, Is.EqualTo("Programacion"));
+                using (File.CreateText(path))
+                {
+                    var c = new Cabinet(DirName);
+                    Assert.That(c.Title, Is.EqualTo("Programacion"));
+                }
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
             }
         }
 
