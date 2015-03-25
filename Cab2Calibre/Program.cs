@@ -11,11 +11,12 @@
         #region Constants
 
         private const string SOURCE_DIR = ".";
-        private const string TARGET_DIR = "_export";
 
         #endregion
 
         #region Fields
+
+        private static string[] allTags;
 
         private readonly FileSystem _fs;
         private readonly string _targetDir;
@@ -32,7 +33,8 @@
             _fs = fs;
         }
 
-        public Program(string targetDir) : this(targetDir, new FileSystem())
+        public Program(string targetDir)
+            : this(targetDir, new FileSystem())
         {
         }
 
@@ -44,8 +46,20 @@
         {
             get
             {
-                var tags = ConfigurationManager.AppSettings["ExportTags"] ?? string.Empty;
-                return tags.Split(',').NotNullOrEmpty().Trimmed().Distinct();
+                if (allTags == null)
+                {
+                    allTags = GetConfigNamed("AllTags", orElse: string.Empty).Split(',');
+                }
+
+                return allTags.Trimmed().NotNullOrEmpty().Distinct();
+            }
+        }
+
+        private static string TargetDir
+        {
+            get
+            {
+                return Path.GetFullPath(GetConfigNamed("TargetDir", orElse: Path.Combine(".", "_export")));
             }
         }
 
@@ -56,7 +70,7 @@
         public static int Main()
         {
             var source = new Cabinet(SOURCE_DIR);
-            var program = new Program(Path.Combine(@"/media/E01C57B51C578586/ebooks", TARGET_DIR));
+            var program = new Program(Path.Combine(@"/media/E01C57B51C578586/ebooks", TargetDir));
             //var program = new Program(Path.Combine(@"C:\Users\User\_export", TARGET_DIR));
 
             program.Export(source, AllTags);
@@ -69,10 +83,15 @@
 
         #region Methods
 
+        private static string GetConfigNamed(string name, string orElse)
+        {
+            return ConfigurationManager.AppSettings[name] ?? orElse;
+        }
+
         private void CopyBook(Cabinet source, Book book, string dname)
         {
-            string targetFilePath = Path.Combine(dname, book.FileNameInLib);
-            string sourceFilePath = book.FullPath(source.HomePath);
+            var targetFilePath = Path.Combine(dname, book.FileNameInLib);
+            var sourceFilePath = book.FullPath(source.HomePath);
             _fs.CopyFile(sourceFilePath, targetFilePath);
         }
 
@@ -80,7 +99,7 @@
         {
             ValidateTargetPath(_targetDir);
 
-            List<string> tagList = tags.ToList();
+            var tagList = tags.ToList();
             ProcessCab(source, _targetDir, tagList);
             ProcessChildCabs(source, tagList);
         }
@@ -89,11 +108,11 @@
         {
             Console.WriteLine("\nprocessing {0}", source.HomePath);
 
-            IEnumerable<Book> books = source.Books;
+            var books = source.Books;
             var opfWriter = new OpfWriter();
 
-            Book prev = Book.Null;
-            string dname = string.Empty;
+            var prev = Book.Null;
+            var dname = string.Empty;
 
             books.ForEach(
                 (id, book) =>
@@ -117,7 +136,7 @@
 
         private void ProcessChildCabs(Cabinet source, List<string> tags)
         {
-            foreach (Cabinet cabinet in source.Children)
+            foreach (var cabinet in source.Children)
             {
                 Export(cabinet, tags.Concat(cabinet.Title.ToAtom()).Distinct());
             }
