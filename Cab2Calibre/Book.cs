@@ -124,7 +124,7 @@
             get
             {
                 var result = FindMainTitle();
-                return TitleSufixes.Where(s => result.ToLower().EndsWith(s))
+                return TitleSufixes.Where(s => result.ToLower().EndsWith(", " + s))
                     .Aggregate(
                         result,
                         (title, suffix) => string.Format("{0} {1}", suffix.Capitalize(), GetTitleText(title, suffix)));

@@ -39,29 +39,31 @@
             Assert.AreEqual("Title, example", b.MainTitle);
         }
 
-        [Test]
-        public void MainTitle_WithArticleInTitle_ShouldNotAlterTitle()
-        {
-            var articles = "A|An|The".Split('|');
-            foreach (var article in articles)
-            {
-                var expected = string.Format("{0} title", article);
-                var b = new Book(string.Format("file\t{0}\t\tAuthor\tPublisher\t1998\tEnglish", expected));
-                Assert.AreEqual(expected, b.MainTitle, "for article '" + article + "'");
-            }
-        }
+		[Test]
+		public void MainTitle_WithArticleInFrontOfTitle_ShouldNotAlterTitle(
+			[Values("A","An","The")]string article)
+		{
+			var expected = string.Format ("{0} title", article);
+			var b = new Book (string.Format ("file\t{0}\t\tAuthor\tPublisher\t1998\tEnglish", expected));
+			Assert.AreEqual (expected, b.MainTitle);
+		}
+
+		[Test]
+		public void MainTitle_LastWordInTitleEndsWithArticle_ShouldNotAlterTitle()
+		{
+			var b = new Book("file\tTrauma\tIntensive Care\tAuthor\tPublisher\t1998\tEnglish");
+			Assert.AreEqual("Trauma", b.MainTitle);
+		}
 
         [Test]
-        public void MainTitle_WithArticleAsSubfixInTitle_ShouldChangeToPrefixArticle()
+        public void MainTitle_WithArticleAsSubfixInTitle_ShouldChangeToPrefixArticle(
+			[Values("A","An","The")]string article)
         {
-            var articles = "A|An|The".Split('|');
-            foreach (var article in articles)
-            {
-                var title = string.Format("Title, {0}", article);
-                var expected = string.Format("{0} Title", article);
-                var b = new Book(string.Format("file\t{0}\t\tAuthor\tPublisher\t1998\tEnglish", title));
-                Assert.AreEqual(expected, b.MainTitle, "for article '" + article + "'");
-            }
+			Assert.Fail(article);
+            var title = string.Format("Title, {0}", article);
+            var expected = string.Format("{0}xxxx", article);
+            var b = new Book(string.Format("file\t{0}\t\tAuthor\tPublisher\t1998\tEnglish", title));
+            Assert.AreEqual(expected, b.MainTitle);
         }
 
         [Test]
