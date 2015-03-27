@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="Cabinet.cs" />
+    <Compile Include="EditionTranslator.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LanguageCatalog.cs" />

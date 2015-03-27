@@ -4,7 +4,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-	using NUnit.Framework;
+
+    using NUnit.Framework;
 
     using Cab2Calibre;
 
@@ -59,9 +60,8 @@
         public void MainTitle_WithArticleAsSubfixInTitle_ShouldChangeToPrefixArticle(
 			[Values("A","An","The")]string article)
         {
-			Assert.Fail(article);
             var title = string.Format("Title, {0}", article);
-            var expected = string.Format("{0}xxxx", article);
+            var expected = string.Format("{0} Title", article);
             var b = new Book(string.Format("file\t{0}\t\tAuthor\tPublisher\t1998\tEnglish", title));
             Assert.AreEqual(expected, b.MainTitle);
         }
