@@ -1,4 +1,4 @@
-namespace Cab2Calibre
+﻿namespace Cab2Calibre
 {
     using System;
     using System.Collections.Generic;

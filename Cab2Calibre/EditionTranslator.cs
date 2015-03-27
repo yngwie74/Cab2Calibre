@@ -1,4 +1,4 @@
-namespace Cab2Calibre
+﻿namespace Cab2Calibre
 {
     using System;
     using System.Collections.Generic;
@@ -69,7 +69,7 @@ namespace Cab2Calibre
 
         private static string Spanish(string title)
         {
-            return String.Format("{0}a Edici�n", GetNumber(title));
+            return String.Format("{0}a Edición", GetNumber(title));
         }
 
         #endregion

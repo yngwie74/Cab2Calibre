@@ -1,4 +1,4 @@
-namespace Cab2CalibreTests
+锘縩amespace Cab2CalibreTests
 {
     using Cab2Calibre;
 
@@ -60,14 +60,14 @@ namespace Cab2CalibreTests
             Assert.That(edition, Is.EqualTo(expected));
         }
 
-        [TestCase(",3E", "3a Edici髇")  ][TestCase(",5E", "5a Edici髇")  ]
-        [TestCase(",5E", "5a Edici髇")  ][TestCase(",19E", "19a Edici髇")]
-        [TestCase(",20E", "20a Edici髇")][TestCase(",21E", "21a Edici髇")]
-        [TestCase(",32E", "32a Edici髇")][TestCase(",46E", "46a Edici髇")]
-        [TestCase(",48E", "48a Edici髇")][TestCase(",62E", "62a Edici髇")]
-        [TestCase(",64E", "64a Edici髇")][TestCase(",75E", "75a Edici髇")]
-        [TestCase(",80E", "80a Edici髇")][TestCase(",88E", "88a Edici髇")]
-        [TestCase(",97E", "97a Edici髇")][TestCase(",99E", "99a Edici髇")]
+        [TestCase(",3E", "3a Edici贸n")  ][TestCase(",5E", "5a Edici贸n")  ]
+        [TestCase(",5E", "5a Edici贸n")  ][TestCase(",19E", "19a Edici贸n")]
+        [TestCase(",20E", "20a Edici贸n")][TestCase(",21E", "21a Edici贸n")]
+        [TestCase(",32E", "32a Edici贸n")][TestCase(",46E", "46a Edici贸n")]
+        [TestCase(",48E", "48a Edici贸n")][TestCase(",62E", "62a Edici贸n")]
+        [TestCase(",64E", "64a Edici贸n")][TestCase(",75E", "75a Edici贸n")]
+        [TestCase(",80E", "80a Edici贸n")][TestCase(",88E", "88a Edici贸n")]
+        [TestCase(",97E", "97a Edici贸n")][TestCase(",99E", "99a Edici贸n")]
         public void InSpanish(string title, string expected)
         {
             var edition = EditionTranslator.GetEdition(title, "spa");

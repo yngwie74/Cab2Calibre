@@ -10,9 +10,9 @@
     {
         #region Constants
 
-        private const string DefaultLanguage = English;
-
         private const string English = "english";
+
+        private const string DefaultLanguage = English;
 
         private const int MaxFsNameLength = 50;
 
