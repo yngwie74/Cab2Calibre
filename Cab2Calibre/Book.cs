@@ -34,18 +34,6 @@
 
         #endregion
 
-        public bool BookExists(string cabPath)
-        {
-            //Console.WriteLine(full_path);
-            return File.Exists(FullPath(cabPath));
-        }
-
-        public string FullPath(string cabPath)
-        {
-            var fullPath = Path.Combine(cabPath, FileName);
-            return fullPath;
-        }
-
         #region Constructors and Destructors
 
         public Book(string line)
@@ -76,6 +64,19 @@
             }
         }
 
+        public int Edition
+        {
+            get
+            {
+                return JoinTitle(FindMainTitle(), SubTitle).GetEditionNumber();
+            }
+        }
+
+        public string FileName
+        {
+            get { return _fileName; }
+        }
+
         public string FileNameInLib
         {
             get
@@ -90,10 +91,7 @@
         {
             get
             {
-                var subtitle = SubTitle;
-                return string.IsNullOrEmpty(subtitle) 
-                    ? MainTitle 
-                    : string.Format("{0}: {1}", MainTitle, subtitle);
+                return JoinTitle(MainTitle, SubTitle).FormatEdition(Edition, Language);
             }
         }
 
@@ -123,7 +121,7 @@
         {
             get
             {
-                var result = FindMainTitle();
+                var result = FindMainTitle().RemoveEdition();
                 return TitleSufixes.Where(s => result.ToLower().EndsWith(", " + s))
                     .Aggregate(
                         result,
@@ -158,22 +156,28 @@
             }
         }
 
-        public string FileName
-        {
-            get { return _fileName; }
-        }
-
         #endregion
 
         #region Public Methods and Operators
+
+        public bool BookExists(string cabPath)
+        {
+            return File.Exists(FullPath(cabPath));
+        }
 
         public string DirNameInLib(int id)
         {
             var parent = MainAuthor.ToFsName(MaxFsNameLength);
             var sid = string.Format(" ({0})", id);
-			var title = FullTitle.Replace(':', '_').ToFsName(MaxFsNameLength - sid.Length);
+            var title = FullTitle.Replace(':', '_').ToFsName(MaxFsNameLength - sid.Length);
             var child = string.Format("{0}{1}", title, sid);
             return Path.Combine(parent, child);
+        }
+
+        public string FullPath(string cabPath)
+        {
+            var fullPath = Path.Combine(cabPath, FileName);
+            return fullPath;
         }
 
         public override string ToString()
@@ -188,6 +192,11 @@
         private static string GetTitleText(string title, string suffix)
         {
             return title.Substring(0, title.Length - suffix.Length - 2);
+        }
+
+        private static string JoinTitle(string mainTitle, string subtitle)
+        {
+            return !string.IsNullOrEmpty(subtitle) ? string.Format("{0}: {1}", mainTitle, subtitle) : mainTitle;
         }
 
         private static string ReverseNameOrder(string name)

@@ -33,51 +33,51 @@
         [TestCase(50, "title: sub-title, 50e")]
         public void GetNumber(int expected, string title)
         {
-            var edition = EditionTranslator.GetNumber(title);
+            var edition = title.GetEditionNumber();
             Assert.That(edition, Is.EqualTo(expected));
         }
 
         [Test]
-        [TestCase(",1E", "1st Edition")  ][TestCase(",2E", "2nd Edition")  ]
-        [TestCase(",3E", "3rd Edition")  ][TestCase(",4E", "4th Edition")  ]
-        [TestCase(",5E", "5th Edition")  ][TestCase(",6E", "6th Edition")  ]
-        [TestCase(",7E", "7th Edition")  ][TestCase(",8E", "8th Edition")  ]
-        [TestCase(",9E", "9th Edition")  ][TestCase(",10E", "10th Edition")]
-        [TestCase(",11E", "11th Edition")][TestCase(",12E", "12th Edition")]
-        [TestCase(",13E", "13th Edition")][TestCase(",14E", "14th Edition")]
-        [TestCase(",15E", "15th Edition")][TestCase(",16E", "16th Edition")]
-        [TestCase(",17E", "17th Edition")][TestCase(",18E", "18th Edition")]
-        [TestCase(",19E", "19th Edition")][TestCase(",20E", "20th Edition")]
-        [TestCase(",22E", "22nd Edition")][TestCase(",32E", "32nd Edition")]
-        [TestCase(",34E", "34th Edition")][TestCase(",48E", "48th Edition")]
-        [TestCase(",55E", "55th Edition")][TestCase(",56E", "56th Edition")]
-        [TestCase(",63E", "63rd Edition")][TestCase(",68E", "68th Edition")]
-        [TestCase(",70E", "70th Edition")][TestCase(",81E", "81st Edition")]
-        [TestCase(",89E", "89th Edition")][TestCase(",99E", "99th Edition")]
-        public void InEnglish(string title, string expected)
+        [TestCase(01, "1st Edition") ][TestCase(02, "2nd Edition") ]
+        [TestCase(03, "3rd Edition") ][TestCase(04, "4th Edition") ]
+        [TestCase(05, "5th Edition") ][TestCase(06, "6th Edition") ]
+        [TestCase(07, "7th Edition") ][TestCase(08, "8th Edition") ]
+        [TestCase(09, "9th Edition") ][TestCase(10, "10th Edition")]
+        [TestCase(11, "11th Edition")][TestCase(12, "12th Edition")]
+        [TestCase(13, "13th Edition")][TestCase(14, "14th Edition")]
+        [TestCase(15, "15th Edition")][TestCase(16, "16th Edition")]
+        [TestCase(17, "17th Edition")][TestCase(18, "18th Edition")]
+        [TestCase(19, "19th Edition")][TestCase(20, "20th Edition")]
+        [TestCase(22, "22nd Edition")][TestCase(32, "32nd Edition")]
+        [TestCase(34, "34th Edition")][TestCase(48, "48th Edition")]
+        [TestCase(55, "55th Edition")][TestCase(56, "56th Edition")]
+        [TestCase(63, "63rd Edition")][TestCase(68, "68th Edition")]
+        [TestCase(70, "70th Edition")][TestCase(81, "81st Edition")]
+        [TestCase(89, "89th Edition")][TestCase(99, "99th Edition")]
+        public void InEnglish(int n, string expected)
         {
-            var edition = EditionTranslator.GetEdition(title, "eng");
+            var edition = EditionTranslator.GetEdition(n, "eng");
             Assert.That(edition, Is.EqualTo(expected));
         }
 
-        [TestCase(",3E", "3a Edición")  ][TestCase(",5E", "5a Edición")  ]
-        [TestCase(",5E", "5a Edición")  ][TestCase(",19E", "19a Edición")]
-        [TestCase(",20E", "20a Edición")][TestCase(",21E", "21a Edición")]
-        [TestCase(",32E", "32a Edición")][TestCase(",46E", "46a Edición")]
-        [TestCase(",48E", "48a Edición")][TestCase(",62E", "62a Edición")]
-        [TestCase(",64E", "64a Edición")][TestCase(",75E", "75a Edición")]
-        [TestCase(",80E", "80a Edición")][TestCase(",88E", "88a Edición")]
-        [TestCase(",97E", "97a Edición")][TestCase(",99E", "99a Edición")]
-        public void InSpanish(string title, string expected)
+        [TestCase(01, "1a Edición") ][TestCase(05, "5a Edición") ]
+        [TestCase(05, "5a Edición") ][TestCase(19, "19a Edición")]
+        [TestCase(20, "20a Edición")][TestCase(21, "21a Edición")]
+        [TestCase(32, "32a Edición")][TestCase(46, "46a Edición")]
+        [TestCase(48, "48a Edición")][TestCase(62, "62a Edición")]
+        [TestCase(64, "64a Edición")][TestCase(75, "75a Edición")]
+        [TestCase(80, "80a Edición")][TestCase(88, "88a Edición")]
+        [TestCase(97, "97a Edición")][TestCase(99, "99a Edición")]
+        public void InSpanish(int n, string expected)
         {
-            var edition = EditionTranslator.GetEdition(title, "spa");
+            var edition = EditionTranslator.GetEdition(n, "spa");
             Assert.That(edition, Is.EqualTo(expected));
         }
 
         [Test]
         public void InUnknownLanguage()
         {
-            var edition = EditionTranslator.GetEdition("title, 7e: sub-title", "xyz");
+            var edition = EditionTranslator.GetEdition(7, "xyz");
             Assert.That(edition, Is.EqualTo("7E"));
         }
 
@@ -104,7 +104,7 @@
         [TestCase("title: sub-title, 2E", "title: sub-title")]
         public void RemoveEdition(string title, string expected)
         {
-            var result = EditionTranslator.RemoveEdition(title);
+            var result = title.RemoveEdition();
             Assert.That(result, Is.EqualTo(expected));
         }
 

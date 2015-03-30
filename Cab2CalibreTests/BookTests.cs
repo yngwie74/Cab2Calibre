@@ -13,6 +13,34 @@
     public class BookTests
     {
         [Test]
+        public void FullTitle_WhenHasEdition_ShouldTranslateToEnglish()
+        {
+            var b = new Book("file\tTitle, 5E\t\tAuthor\tPublisher\t1998\tEnglish");
+            Assert.AreEqual("Title, 5th Edition", b.FullTitle);
+        }
+
+        [Test]
+        public void FullTitle_WhenHasEdition_ShouldTranslateToSpanish()
+        {
+            var b = new Book("file\tTitle, 3E\t\tAuthor\tPublisher\t1998\tEspañol");
+            Assert.AreEqual("Title, 3a Edición", b.FullTitle);
+        }
+
+        [Test]
+        public void FullTitle_WhenHasEdition_ShouldMoveToEnd()
+        {
+            var b = new Book("file\tTitle, 5E\tSub-Title\tAuthor\tPublisher\t1998\tEnglish");
+            Assert.AreEqual("Title: Sub-Title, 5th Edition", b.FullTitle);
+        }
+
+        [Test]
+        public void FullTitle_WhenHasEditionAndArticleSufix_ShouldMoveToEnd()
+        {
+            var b = new Book("file\tTitle, A, 3E\tSub-Title\tAuthor\tPublisher\t1998\tEnglish");
+            Assert.AreEqual("A Title: Sub-Title, 3rd Edition", b.FullTitle);
+        }
+
+        [Test]
         public void MainTitle_WithTitle_ShouldReturnTitle()
         {
             var b = new Book("file\tTitle\t\tAuthor\tPublisher\t1998\tEnglish");
