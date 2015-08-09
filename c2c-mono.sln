@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cab2Calibre", "Cab2Calibre\Cab2Calibre-mono.csproj", "{10455976-70F5-4CAF-911C-1BFAF06D5A67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cab2Calibre-mono", "Cab2Calibre\Cab2Calibre-mono.csproj", "{10455976-70F5-4CAF-911C-1BFAF06D5A67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cab2CalibreTests", "Cab2CalibreTests\Cab2CalibreTests-mono.csproj", "{D111515B-2529-43C5-A36C-E5366F5BF726}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cab2CalibreTests-mono", "Cab2CalibreTests\Cab2CalibreTests-mono.csproj", "{D111515B-2529-43C5-A36C-E5366F5BF726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,5 +22,16 @@ Global
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Cab2Calibre\Cab2Calibre-mono.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.VersionControlPolicy = $2
+		$2.inheritsSet = Mono
+		$0.ChangeLogPolicy = $3
+		$3.UpdateMode = None
+		$3.MessageStyle = $4
+		$4.LineAlign = 0
+		$3.inheritsSet = Mono
 	EndGlobalSection
 EndGlobal

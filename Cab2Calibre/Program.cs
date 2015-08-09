@@ -47,7 +47,7 @@
             {
                 if (allTags == null)
                 {
-                    allTags = GetConfigNamed("AllTags", orElse: string.Empty).Split(',');
+                    allTags = GetConfigNamed("ExportTags", orElse: string.Empty).Split(',');
                 }
 
                 return allTags.Trimmed().NotNullOrEmpty().Distinct();

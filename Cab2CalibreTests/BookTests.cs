@@ -29,8 +29,8 @@
         [Test]
         public void FullTitle_WhenHasEdition_ShouldMoveToEnd()
         {
-            var b = new Book("file\tTitle, 5E\tSub-Title\tAuthor\tPublisher\t1998\tEnglish");
-            Assert.AreEqual("Title: Sub-Title, 5th Edition", b.FullTitle);
+            var b = new Book("file\tVHDL\tProgramming by Example, 4E\tAuthor\tPublisher\t1998\tEnglish");
+            Assert.AreEqual("VHDL: Programming by Example, 4th Edition", b.FullTitle);
         }
 
         [Test]

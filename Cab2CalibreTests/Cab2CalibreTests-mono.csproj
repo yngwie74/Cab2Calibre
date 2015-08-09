@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D111515B-2529-43C5-A36C-E5366F5BF726}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -33,27 +33,26 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.core, Version=2.5.10.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <Private>False</Private>
-      <Package>nunit</Package>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.5.10.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <Private>False</Private>
-      <Package>nunit</Package>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="BookTests.cs" />
     <Compile Include="CabinetTests.cs" />
+    <Compile Include="EditionTranslatorTests.cs" />
     <Compile Include="OpfWriterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cab2Calibre\Cab2Calibre-mono.csproj">
-      <Project>{10455976-70f5-4caf-911c-1bfaf06d5a67}</Project>
-      <Name>Cab2Calibre</Name>
+      <Project>{10455976-70F5-4CAF-911C-1BFAF06D5A67}</Project>
+      <Name>Cab2Calibre-mono</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

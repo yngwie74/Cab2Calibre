@@ -15,20 +15,20 @@
         private const string UUID = "c1ed58c2-b129-4290-865c-6b4c";
 
         private static readonly string ExpectedXml =
-            "<?xml version=\"1.0\" encoding=\"utf-16\"?>" + Environment.NewLine +
-            "<package unique-identifier=\"uuid_id\" version=\"2.0\" xmlns=\"http://www.idpf.org/2007/opf\">" + Environment.NewLine +
-            "\t<metadata xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:opf=\"http://www.idpf.org/2007/opf\">" + Environment.NewLine +
-            "\t\t<dc:identifier opf:scheme=\"calibre\" id=\"calibre_id\">125</dc:identifier>" + Environment.NewLine +
-            "\t\t<dc:identifier opf:scheme=\"uuid\" id=\"uuid_id\">" + UUID + @"</dc:identifier>" + Environment.NewLine +
-            "\t\t<dc:title>¿Quién se ha llevado: mi queso?</dc:title>" + Environment.NewLine +
-            "\t\t<dc:creator opf:file-as=\"Argüeyes, José\">José Argüeyes</dc:creator>" + Environment.NewLine +
-            "\t\t<dc:contributor opf:file-as=\"calibre\" opf:role=\"bkp\">calibre (1.26.0) [http://calibre-ebook.com]</dc:contributor>" + Environment.NewLine +
-            "\t\t<dc:date>1998-01-01T00:00:00-06:00</dc:date>" + Environment.NewLine +
-            "\t\t<dc:publisher>Publisher</dc:publisher>" + Environment.NewLine +
-            "\t\t<dc:language>spa</dc:language>" + Environment.NewLine +
-            "\t\t<dc:subject>tag 1 &amp; 2</dc:subject>" + Environment.NewLine +
-            "\t\t<dc:subject>tag3</dc:subject>" + Environment.NewLine +
-            "\t</metadata>" + Environment.NewLine +
+            "<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n" +
+            "<package unique-identifier=\"uuid_id\" version=\"2.0\" xmlns=\"http://www.idpf.org/2007/opf\">\r\n" +
+            "\t<metadata xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:opf=\"http://www.idpf.org/2007/opf\">\r\n" +
+            "\t\t<dc:identifier opf:scheme=\"calibre\" id=\"calibre_id\">125</dc:identifier>\r\n" +
+            "\t\t<dc:identifier opf:scheme=\"uuid\" id=\"uuid_id\">" + UUID + "</dc:identifier>\r\n" +
+            "\t\t<dc:title>¿Quién se ha llevado: mi queso?</dc:title>\r\n" +
+            "\t\t<dc:creator opf:file-as=\"Argüeyes, José\">José Argüeyes</dc:creator>\r\n" +
+            "\t\t<dc:contributor opf:file-as=\"calibre\" opf:role=\"bkp\">calibre (1.26.0) [http://calibre-ebook.com]</dc:contributor>\r\n" +
+            "\t\t<dc:date>1998-01-01T00:00:00-06:00</dc:date>\r\n" +
+            "\t\t<dc:publisher>Publisher</dc:publisher>\r\n" +
+            "\t\t<dc:language>spa</dc:language>\r\n" +
+            "\t\t<dc:subject>tag 1 &amp; 2</dc:subject>\r\n" +
+            "\t\t<dc:subject>tag3</dc:subject>\r\n" +
+            "\t</metadata>\r\n" +
             "</package>";
 
         #endregion

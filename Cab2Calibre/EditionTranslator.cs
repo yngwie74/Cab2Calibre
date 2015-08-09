@@ -31,6 +31,7 @@
 
         public static string FormatEdition(this string title, int editionNumber, string language)
         {
+            title = title.RemoveEdition();
             return editionNumber > 1 ? string.Format("{0}, {1}", title, GetEdition(editionNumber, language)) : title;
         }
 
