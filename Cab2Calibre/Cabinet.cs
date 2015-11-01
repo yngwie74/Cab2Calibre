@@ -83,7 +83,7 @@
 
         private static IEnumerable<string> SubdirsOf(string sourcePath)
         {
-            return Directory.EnumerateDirectories(sourcePath, "*", SearchOption.AllDirectories);
+			return Directory.EnumerateDirectories(sourcePath, "*", SearchOption.TopDirectoryOnly);
         }
 
         private IDictionary<string, Book> ReadIndex()
