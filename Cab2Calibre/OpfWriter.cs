@@ -49,18 +49,18 @@ namespace Cab2Calibre
 
         #region Public Methods and Operators
 
-        public void WriteTo(string targetPath, Book book, int id, IEnumerable<string> tags)
+        public void WriteTo(string targetPath, Book book, int calibreId, IEnumerable<string> tags)
         {
             var opfPath = Path.Combine(targetPath, FILE_NAME);
             if (!File.Exists(opfPath))
             {
                 using (var fileStream = new FileStream(opfPath, FileMode.CreateNew)) 
                     using (var streamWriter = new StreamWriter(fileStream, new UTF8Encoding(false))) 
-                        WriteTo(streamWriter, book, id, tags);
+                        WriteTo(streamWriter, book, calibreId, tags);
             }
         }
 
-        public void WriteTo(TextWriter textWriter, Book book, int id, IEnumerable<string> tags)
+        public void WriteTo(TextWriter textWriter, Book book, int calibreId, IEnumerable<string> tags)
         {
             using (var writer = XmlWriter.Create(textWriter, DocumentSettings))
             {
@@ -69,7 +69,7 @@ namespace Cab2Calibre
                 StartPackage(writer);
                 StartMetadata(writer);
 
-                WriteIdentifier(writer, "calibre", "calibre_id", id);
+                WriteIdentifier(writer, "calibre", "calibre_id", calibreId);
                 WriteIdentifier(writer, "uuid", "uuid_id", _uniqueIdGenerator.Invoke());
 
                 // Title
