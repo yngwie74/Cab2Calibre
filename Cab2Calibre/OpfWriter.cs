@@ -30,7 +30,7 @@ namespace Cab2Calibre
 
         #region Fields
 
-        private readonly Func<string> _uniqueIdGenerator;
+		private readonly Func<string> uniqueIdGenerator;
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace Cab2Calibre
 
         public OpfWriter(Func<string> uniqueIdGenerator)
         {
-            _uniqueIdGenerator = uniqueIdGenerator;
+			this.uniqueIdGenerator = uniqueIdGenerator;
         }
 
         public OpfWriter() : this(NewUuid)

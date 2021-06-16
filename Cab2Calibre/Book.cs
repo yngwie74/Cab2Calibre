@@ -28,9 +28,7 @@
 
         #region Fields
 
-        private readonly string[] _data;
-
-        private readonly string _fileName;
+        private readonly string[] data;
 
         #endregion
 
@@ -39,68 +37,40 @@
         public Book(string line)
         {
             var parts = line.SplitBy('\t').Trimmed().ToArray();
-            _fileName = parts[0];
-            _data = parts.Skip(1).ToArray();
+            FileName = parts[0];
+            this.data = parts.Skip(1).ToArray();
         }
 
         #endregion
 
         #region Public Properties
 
-        public IEnumerable<string> Authors
-        {
-            get
-            {
-                return SortableAuthors.Select(ReverseNameOrder);
-            }
-        }
+        public IEnumerable<string> Authors => SortableAuthors.Select(ReverseNameOrder);
 
-        public string Date
-        {
-            get
-            {
-                int year;
-                return int.TryParse(_data[4], out year) ? string.Format("{0}-01-01T00:00:00-06:00", year) : string.Empty;
-            }
-        }
+        public string Date => int.TryParse(this.data[4], out var year) ? $"{year}-01-01T00:00:00-06:00" : string.Empty;
 
-        public int Edition
-        {
-            get
-            {
-                return JoinTitle(FindMainTitle(), SubTitle).GetEditionNumber();
-            }
-        }
+        public int Edition => JoinTitle(FindMainTitle(), SubTitle).GetEditionNumber();
 
-        public string FileName
-        {
-            get { return _fileName; }
-        }
+        public string FileName { get; }
 
         public string FileNameInLib
         {
             get
             {
                 var ext = Path.GetExtension(FileName);
-                var result = string.Format("{0} - {1}", MainTitle, MainAuthor).ToFsName(MaxFsNameLength);
+                var result = $"{MainTitle} - {MainAuthor}".ToFsName(MaxFsNameLength);
                 return result + ext;
             }
         }
 
-        public string FullTitle
-        {
-            get
-            {
-                return JoinTitle(MainTitle, SubTitle).FormatEdition(Edition, Language);
-            }
-        }
+        public string FullTitle => JoinTitle(MainTitle, SubTitle).FormatEdition(Edition, Language);
 
         public string Language
         {
             get
             {
-                var language = (_data.Length >= 6)
-                                   ? _data[5].ToLower()
+                var language = (this.data.Length >= 6)
+                                   ? this.data[5].ToLower()
                                    : LanguageCatalog.GetIsoCodeFor(DefaultLanguage, DefaultLanguage);
 
                 return LanguageCatalog.GetIsoCodeFor(language, DefaultLanguage);
@@ -125,29 +95,20 @@
                 return TitleSufixes.Where(s => result.ToLower().EndsWith(", " + s))
                     .Aggregate(
                         result,
-                        (title, suffix) => string.Format("{0} {1}", suffix.Capitalize(), GetTitleText(title, suffix)));
+                        (title, suffix) => $"{suffix.Capitalize()} {GetTitleText(title, suffix)}");
             }
         }
 
-        public string Publisher
-        {
-            get { return _data[3]; }
-        }
+        public string Publisher => this.data[3];
 
-        public IEnumerable<string> SortableAuthors
-        {
-            get
-            {
-                return _data[2].SplitBy('|').NotNullOrEmpty().Select(StripRole);
-            }
-        }
+        public IEnumerable<string> SortableAuthors => this.data[2].SplitBy('|').NotNullOrEmpty().Select(StripRole);
 
         public string SubTitle
         {
             get
             {
-                var result = _data[1];
-                if (string.IsNullOrEmpty(_data[0]))
+                var result = this.data[1];
+                if (string.IsNullOrEmpty(this.data[0]))
                 {
                     result = string.Empty;
                 }
@@ -168,9 +129,9 @@
         public string DirNameInLib(int id)
         {
             var parent = MainAuthor.ToFsName(MaxFsNameLength);
-            var sid = string.Format(" ({0})", id);
+            var sid = $" ({id})";
             var title = FullTitle.Replace(':', '_').ToFsName(MaxFsNameLength - sid.Length);
-            var child = string.Format("{0}{1}", title, sid);
+            var child = $"{title}{sid}";
             return Path.Combine(parent, child);
         }
 
@@ -182,7 +143,7 @@
 
         public override string ToString()
         {
-            return string.Format("{0} by {1}", FullTitle, MainAuthor);
+            return $"{FullTitle} by {MainAuthor}";
         }
 
         #endregion
@@ -196,7 +157,7 @@
 
         private static string JoinTitle(string mainTitle, string subtitle)
         {
-            return !string.IsNullOrEmpty(subtitle) ? string.Format("{0}: {1}", mainTitle, subtitle) : mainTitle;
+            return !string.IsNullOrEmpty(subtitle) ? $"{mainTitle}: {subtitle}" : mainTitle;
         }
 
         private static string ReverseNameOrder(string name)
@@ -214,10 +175,10 @@
 
         private string FindMainTitle()
         {
-            var result = _data[0];
+            var result = this.data[0];
             if (string.IsNullOrEmpty(result))
             {
-                result = _data[1];
+                result = this.data[1];
             }
 
             return result;

@@ -14,7 +14,7 @@
 
         private const string RE_PATTERN = @"^(?<prev>.*), *(?<number>\d{1,2})[Ee]\b(?<after>.*)$";
 
-        private static readonly string[] EnglishSufixes = { "th", "st", "nd", "rd" };
+        private static readonly string[] EnglishSuffixes = { "th", "st", "nd", "rd" };
 
         private static readonly Regex Matcher = new Regex(RE_PATTERN, RE_OPTIONS);
 
@@ -32,7 +32,7 @@
         public static string FormatEdition(this string title, int editionNumber, string language)
         {
             title = title.RemoveEdition();
-            return editionNumber > 1 ? string.Format("{0}, {1}", title, GetEdition(editionNumber, language)) : title;
+            return editionNumber > 1 ? $"{title}, {GetEdition(editionNumber, language)}" : title;
         }
 
         public static int GetEditionNumber(this string title)
@@ -52,12 +52,12 @@
 
         private static string Default(int editionNumber)
         {
-            return string.Format("{0}E", editionNumber);
+            return $"{editionNumber}E";
         }
 
         private static string English(int editionNumber)
         {
-            return string.Format("{0}{1} Edition", editionNumber, GetEnglishSufix(editionNumber));
+            return $"{editionNumber}{GetEnglishSuffix(editionNumber)} Edition";
         }
 
         internal static string GetEdition(int editionNumber, string language)
@@ -66,14 +66,14 @@
             return translate(editionNumber);
         }
 
-        private static string GetEnglishSufix(int n)
+        private static string GetEnglishSuffix(int n)
         {
-            return EnglishSufixes[n / 10 % 10 == 1 || n % 10 > 3 ? 0 : n % 10];
+            return EnglishSuffixes[n / 10 % 10 == 1 || n % 10 > 3 ? 0 : n % 10];
         }
 
         private static string Spanish(int editionNumber)
         {
-            return string.Format("{0}a Edición", editionNumber);
+            return $"{editionNumber}a Edición";
         }
 
         #endregion

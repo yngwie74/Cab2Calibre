@@ -67,13 +67,7 @@
 
         #region Public Properties
 
-        public static IEnumerable<KeyValuePair<string, string>> Items
-        {
-            get
-            {
-                return Languages.AsEnumerable();
-            }
-        }
+        public static IEnumerable<KeyValuePair<string, string>> Items => Languages.AsEnumerable();
 
         #endregion
 

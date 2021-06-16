@@ -16,8 +16,6 @@
 
         #region Fields
 
-        private readonly string _homePath;
-
         #endregion
 
         #region Constructors and Destructors
@@ -26,11 +24,11 @@
         {
             if (!IsCabinet(path))
             {
-                var message = string.Format("'{0}' no es un directorio CAB", path);
-                throw new ArgumentException(message, "path");
+                var message = $"'{path}' no es un directorio CAB";
+                throw new ArgumentException(message, nameof(path));
             }
 
-            _homePath = Path.GetFullPath(path);
+            HomePath = Path.GetFullPath(path);
         }
 
         #endregion
@@ -45,15 +43,9 @@
             }
         }
 
-        public string HomePath
-        {
-            get { return _homePath; }
-        }
+        public string HomePath { get; }
 
-        public string Title
-        {
-            get { return Path.GetFileName(HomePath); }
-        }
+        public string Title => Path.GetFileName(HomePath);
 
         #endregion
 
@@ -88,12 +80,12 @@
 
         private IDictionary<string, Book> ReadIndex()
         {
-            Func<string, Book> parse = line => new Book(line);
+	        Book Parse(string line) => new Book(line);
 
-            var indexFilePath = IndexFilePath(HomePath);
+	        var indexFilePath = IndexFilePath(HomePath);
             using (var f = new StreamReader(indexFilePath, Encoding.GetEncoding("Windows-1250")))
             {
-                return f.ReadLines().Select(parse).ToDictionary(b => b.FileName, b => b);
+                return f.ReadLines().Select(Parse).ToDictionary(b => b.FileName, b => b);
             }
         }
 

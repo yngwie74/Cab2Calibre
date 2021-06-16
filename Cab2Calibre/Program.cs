@@ -18,10 +18,10 @@
 
         private static string[] allTags;
 
-        private readonly FileSystem _fs;
-        private readonly string _targetDir;
+        private readonly FileSystem fs;
+        private readonly string targetDir;
 
-        private int lastID = 1;
+        private int lastId = 1;
 
         #endregion
 
@@ -29,8 +29,8 @@
 
         public Program(string targetDir, FileSystem fs)
         {
-            _targetDir = targetDir;
-            _fs = fs;
+	        this.targetDir = targetDir;
+	        this.fs = fs;
         }
 
         public Program(string targetDir) : this(targetDir, new FileSystem())
@@ -54,13 +54,7 @@
             }
         }
 
-        private static string TargetDir
-        {
-            get
-            {
-                return Path.GetFullPath(GetConfigNamed("TargetDir", orElse: Path.Combine(".", "_export")));
-            }
-        }
+        private static string TargetDir => Path.GetFullPath(GetConfigNamed("TargetDir", orElse: Path.Combine(".", "_export")));
 
         #endregion
 
@@ -86,23 +80,23 @@
             return ConfigurationManager.AppSettings[name] ?? orElse;
         }
 
-        private void CopyBook(Cabinet source, Book book, string dname)
+        private void CopyBook(Cabinet source, Book book, string dirName)
         {
-            var targetFilePath = Path.Combine(dname, book.FileNameInLib);
+            var targetFilePath = Path.Combine(dirName, book.FileNameInLib);
             var sourceFilePath = book.FullPath(source.HomePath);
-            _fs.CopyFile(sourceFilePath, targetFilePath);
+            this.fs.CopyFile(sourceFilePath, targetFilePath);
         }
 
         private void Export(Cabinet source, IEnumerable<string> tags)
         {
-            ValidateTargetPath(_targetDir);
+            ValidateTargetPath(this.targetDir);
 
             var tagList = tags.ToList();
-            ProcessCab(source, _targetDir, tagList);
+            ProcessCab(source, this.targetDir, tagList);
             ProcessChildCabs(source, tagList);
         }
 
-        private void ProcessCab(Cabinet source, string targetDir, IEnumerable<string> tags)
+        private void ProcessCab(Cabinet source, string currentDir, IEnumerable<string> tags)
         {
             Console.WriteLine("\nprocessing {0}", source.HomePath);
 
@@ -110,26 +104,26 @@
             var opfWriter = new OpfWriter();
 
             var prev = Book.Null;
-            var dname = string.Empty;
+            var dirName = string.Empty;
 
             books.ForEach(
                 (id, book) =>
                     {
-                        id = lastID + id;
+                        id = this.lastId + id;
                         if (book.ToString() != prev.ToString())
                         {
                             Console.WriteLine(book.ToString());
-                            dname = Path.Combine(targetDir, book.DirNameInLib(id));
-                            _fs.MakeDir(dname);
-                            opfWriter.WriteTo(dname, book, id, tags);
+                            dirName = Path.Combine(currentDir, book.DirNameInLib(id));
+                            this.fs.MakeDir(dirName);
+                            opfWriter.WriteTo(dirName, book, id, tags);
                         }
 
-                        CopyBook(source, book, dname);
+                        CopyBook(source, book, dirName);
 
                         prev = book;
                     });
 
-            lastID += 100;
+            this.lastId += 100;
         }
 
         private void ProcessChildCabs(Cabinet source, List<string> tags)
@@ -144,11 +138,11 @@
         {
             if (!Directory.Exists(targetPath))
             {
-                _fs.MakeDir(targetPath);
+	            this.fs.MakeDir(targetPath);
             }
             else if (File.Exists(targetPath))
             {
-                throw new ArgumentException(string.Format("'{0}' no es un directorio valido", targetPath), "targetPath");
+                throw new ArgumentException($"'{targetPath}' no es un directorio válido", nameof(targetPath));
             }
         }
 

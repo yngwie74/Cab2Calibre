@@ -300,14 +300,14 @@
         public void DirNameInLib_WithoutSubtitle_ShouldIncludeAuthorTitleAndId()
         {
             var b = new Book("file\tTitle\t\tAuthor\tPublisher\t1998\tEnglish");
-            Assert.AreEqual(@"Author" + Path.DirectorySeparatorChar + @"Title (25)", b.DirNameInLib(25));
+            Assert.AreEqual($@"Author{Path.DirectorySeparatorChar}Title (25)", b.DirNameInLib(25));
         }
 
         [Test]
         public void DirNameInLib_WithSubtitle_ShouldIncludeAuthorFullTitleAndId()
         {
             var b = new Book("file\tTitle\tSubtitle\tAuthor\tPublisher\t1998\tEnglish");
-            Assert.AreEqual(@"Author" + Path.DirectorySeparatorChar + @"Title_ Subtitle (25)", b.DirNameInLib(25));
+            Assert.AreEqual($@"Author{Path.DirectorySeparatorChar}Title_ Subtitle (25)", b.DirNameInLib(25));
         }
 
         [Test]
@@ -317,7 +317,7 @@
         public void DirNameInLib_ShouldRemoveInvalidChars()
         {
             var b = new Book("file\t¿Quién se ha llevado\tmi queso?\tArgüeyes, José\tPublisher\t1998\tEspañol");
-            Assert.AreEqual(@"Jose Argueyes" + Path.DirectorySeparatorChar + @"Quien se ha llevado_ mi queso (25)", b.DirNameInLib(25));
+            Assert.AreEqual($@"Jose Argueyes{Path.DirectorySeparatorChar}Quien se ha llevado_ mi queso (25)", b.DirNameInLib(25));
         }
 
         [Test]
