@@ -30,7 +30,7 @@ namespace Cab2Calibre
 
         #region Fields
 
-		private readonly Func<string> uniqueIdGenerator;
+        private readonly Func<string> uniqueIdGenerator;
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace Cab2Calibre
 
         public OpfWriter(Func<string> uniqueIdGenerator)
         {
-			this.uniqueIdGenerator = uniqueIdGenerator;
+            this.uniqueIdGenerator = uniqueIdGenerator;
         }
 
         public OpfWriter() : this(NewUuid)
@@ -54,9 +54,9 @@ namespace Cab2Calibre
             var opfPath = Path.Combine(targetPath, FILE_NAME);
             if (!File.Exists(opfPath))
             {
-                using (var fileStream = new FileStream(opfPath, FileMode.CreateNew)) 
-                    using (var streamWriter = new StreamWriter(fileStream, new UTF8Encoding(false))) 
-                        WriteTo(streamWriter, book, calibreId, tags);
+                using (var fileStream = new FileStream(opfPath, FileMode.CreateNew))
+                using (var streamWriter = new StreamWriter(fileStream, new UTF8Encoding(false)))
+                    WriteTo(streamWriter, book, calibreId, tags);
             }
         }
 
@@ -69,8 +69,8 @@ namespace Cab2Calibre
                 StartPackage(writer);
                 StartMetadata(writer);
 
-                WriteIdentifier(writer, "calibre", "calibre_id", calibreId);
-                WriteIdentifier(writer, "uuid", "uuid_id", _uniqueIdGenerator.Invoke());
+                WriteIdentifier(writer, "calibre", id: "calibre_id", value: calibreId);
+                WriteIdentifier(writer, "uuid", id: "uuid_id", value: this.uniqueIdGenerator.Invoke());
 
                 // Title
                 WriteDcElement(writer, "title", book.FullTitle);
@@ -83,6 +83,13 @@ namespace Cab2Calibre
                 WriteDcElement(writer, "date", book.Date);
                 // Publisher
                 WriteDcElement(writer, "publisher", book.Publisher);
+
+                // ISBN
+                if (!string.IsNullOrEmpty(book.Isbn))
+                {
+                    WriteIdentifier(writer, "ISBN", book.Isbn);
+                }
+
                 // Publisher
                 WriteDcElement(writer, "language", book.Language);
                 // Tags
@@ -119,11 +126,14 @@ namespace Cab2Calibre
             writer.WriteAttributeString("xmlns", OPF_PREFIX, null, OPF_URN);
         }
 
-        private static void WriteIdentifier<T>(XmlWriter writer, string scheme, string id, T value)
+        private static void WriteIdentifier<T>(XmlWriter writer, string scheme, T value, string id = null)
         {
             writer.WriteStartElement(DC_PREFIX, "identifier", DC_URN);
             writer.WriteAttributeString(OPF_PREFIX, "scheme", OPF_URN, scheme);
-            writer.WriteAttributeString("id", id);
+            if (!string.IsNullOrEmpty(id))
+            {
+                writer.WriteAttributeString("id", id);
+            }
             writer.WriteValue(value);
             writer.WriteEndElement();
         }

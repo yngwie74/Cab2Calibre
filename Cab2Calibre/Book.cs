@@ -39,6 +39,10 @@
             var parts = line.SplitBy('\t').Trimmed().ToArray();
             FileName = parts[0];
             this.data = parts.Skip(1).ToArray();
+
+            Isbn = parts.Length > 7 && System.Text.RegularExpressions.Regex.IsMatch(parts[7], @"\b(\d{9}[\dXx]|\d{13})\b")
+	            ? parts[7].Trim().ToUpperInvariant()
+	            : string.Empty;
         }
 
         #endregion
@@ -116,6 +120,8 @@
                 return result;
             }
         }
+
+        public string Isbn { get; }
 
         #endregion
 

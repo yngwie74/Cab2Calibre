@@ -50,6 +50,7 @@
             "</package>";
 
         private const int CALIBRE_ID = 125;
+        private const string SourceLine2 = "_DFEA7F1A8E8FAF27E4CFB1810096A8ED.pdf\tiPod & iTunes for Dummies, 3E\t\tBove, Tony|Rhodes, Cheryl\tWiley Publishing\t2005\tIngles";
 
         #endregion
 
@@ -59,21 +60,48 @@
         public void SpanishWithSubTitleAndEdition()
         {
             AssertGeneratedOpfMatchesSample(
-                ExpectedXml1, 
-                "file\t¿Quién se ha llevado\tmi queso?, 2E\tArgüeyes, José\tPublisher\t1998\tEspañol", 
-                "tag 1 & 2", "tag3" );
+                ExpectedXml1,
+                "file\t¿Quién se ha llevado\tmi queso?, 2E\tArgüeyes, José\tPublisher\t1998\tEspañol",
+                "tag 1 & 2", "tag3");
         }
 
         [Test]
         public void EnglishWithEdition()
         {
             AssertGeneratedOpfMatchesSample(
-                ExpectedXml2, 
-                "_DFEA7F1A8E8FAF27E4CFB1810096A8ED.pdf\tiPod & iTunes for Dummies, 3E\t\tBove, Tony|Rhodes, Cheryl\tWiley Publishing\t2005\tIngles", 
-                "Desktop Applications", "iTunes", "Multimedia & Interactive" );
+                ExpectedXml2,
+                SourceLine2,
+                "Desktop Applications", "iTunes", "Multimedia & Interactive");
+        }
+
+        [Test]
+        public void LineWithoutIsbn()
+        {
+            const string expectedXml = "<dc:identifier opf:scheme=\"ISBN\">";
+
+            var xml = GenerateOpfDocFor(SourceLine2);
+            Assert.That(xml, Does.Not.Contain(expectedXml));
+        }
+
+        [Test]
+        public void LineWithIsbn()
+        {
+            const string isbn = "9780134687476";
+            const string line = "foo.bar\t\t\t\t\t\tEnglish\t" + isbn;
+            const string expectedXml = "<dc:identifier opf:scheme=\"ISBN\">"+isbn+"</dc:identifier>";
+
+            var xml = GenerateOpfDocFor(line);
+
+            Assert.That(xml, Contains.Substring(expectedXml));
         }
 
         private static void AssertGeneratedOpfMatchesSample(string expectedXml, string line, params string[] tags)
+        {
+            var xml = GenerateOpfDocFor(line, tags);
+            Assert.That(xml, Is.EqualTo(expectedXml));
+        }
+
+        private static string GenerateOpfDocFor(string line, params string[] tags)
         {
             var book = new Book(line);
             var st = new StringWriter();
@@ -82,8 +110,7 @@
             opf.WriteTo(st, book, CALIBRE_ID, tags);
 
             var xml = st.ToString();
-
-            Assert.That(xml, Is.EqualTo(expectedXml));
+            return xml;
         }
 
         private static string GenerateBookId()

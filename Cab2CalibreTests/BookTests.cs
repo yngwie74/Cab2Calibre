@@ -394,5 +394,29 @@
 
             Assert.AreEqual(Expected, b.ToString());
         }
+
+        [TestCase("file\tTitle\tSub\tAuthor\t\t\tEnglish")]
+        [TestCase("file\tTitle\tSub\tAuthor\t\t\tEnglish\t ")]
+        public void Isbn_WithoutIsbn_DefaultsToEmpty(string line)
+        {
+	        var b = new Book(line);
+	        Assert.AreEqual(string.Empty, b.Isbn);
+        }
+
+        [Test]
+        public void Isbn_WithInvalidIsbn_DefaultsToEmpty()
+        {
+	        var b = new Book("file\tTitle\tSub\tAuthor\tYEAR\t\tEnglish\t$%7&8/9");
+	        Assert.AreEqual(string.Empty, b.Isbn);
+        }
+
+        [TestCase("020172149X")]
+        [TestCase("020172149x")]
+        [TestCase("9780201895513")]
+        public void Isbn_WithValidIsbn_ShouldReturnGivenIsbnInUpperCase(string isbn)
+        {
+	        var b = new Book($"file\tTitle\tSub\tAuthor\tDate\t1998\tEnglish\t{isbn}");
+	        Assert.AreEqual(isbn.ToUpperInvariant(), b.Isbn);
+        }
     }
 }
